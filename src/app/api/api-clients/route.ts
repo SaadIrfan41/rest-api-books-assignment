@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
     if (user.length === 0) {
       const createUser = await db.unsafe(
-        'INSERT INTO "Client" ("id", "clientName", "clientEmail") VALUES (uuid_generate_v4(), $1, $2) RETURNING *',
+        'INSERT INTO "Client" ("clientName", "clientEmail") VALUES ($1, $2) RETURNING *',
         [clientName, clientEmail]
       )
       console.log('NEW USER', createUser)

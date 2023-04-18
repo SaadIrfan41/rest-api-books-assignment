@@ -47,7 +47,7 @@ export async function POST(request: Request) {
       throw new Error('Property avaliable is required')
     }
     const createbook = await db.unsafe(
-      'INSERT INTO "Books" ("id", "name", "type","available") VALUES (uuid_generate_v4(), $1, $2,$3) RETURNING *',
+      'INSERT INTO "Books" ( "name", "type","available") VALUES ($1, $2,$3) RETURNING *',
       [name, type, available]
     )
     return NextResponse.json({ book: createbook }, { status: 200 })
