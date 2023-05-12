@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { db } from '../../../../db/db'
 
 interface Book {
@@ -8,11 +8,19 @@ interface Book {
   available: boolean
 }
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
-
-  const type = searchParams.get('type')
-  const limit = searchParams.get('limit')
+export async function GET(request: NextRequest) {
+  // const { searchParams } = new URL(request.url)
+  const { searchParams } = request.nextUrl
+  let type: string | null = ''
+  let limit: number = 0
+  if (searchParams.has('type')) {
+    type = searchParams.get('type')
+  }
+  if (searchParams.has('limit')) {
+    type = searchParams.get('limit')
+  }
+  //  const type = searchParams.get('type')
+  //   const limit = searchParams.get('limit')
   console.log(type, limit)
   try {
     let query = 'SELECT * FROM "Books"'
